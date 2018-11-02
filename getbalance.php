@@ -220,8 +220,7 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 	}
 	//echo "----------cipher text------------";
 	//$ciphertext = base64_decode($cipher);
-	echo $cipher;
-	//echo $cipher = strtr($cipher, '-_,' , '+/=');
+	echo $cipher = strtr($cipher, '-_,' , '+/=');
 	//echo "----------cipher text end------------";
 	$c = base64_decode($cipher);
 	$ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
