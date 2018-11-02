@@ -228,7 +228,7 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 	$hmac = substr($c, $ivlen, $sha2len=32);
 	$ciphertext_raw = substr($c, $ivlen+$sha2len);
 	$original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
-	$calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary=true);
+	$calcmac = hash_hmac('sha256', $ciphertext_raw, $salt, $as_binary=true);
 	if (hash_equals($hmac, $calcmac))//PHP 5.6+ timing attack safe comparison
 	{
 		echo $original_plaintext."\n";
@@ -237,6 +237,10 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 	echo "******plan*****";
 	echo $original_plaintext;
 	echo "******plan end*****";
+	echo "====time===";
+	echo time();
+	echo "====time end===";
+
 
 	return $original_plaintext;
 	
