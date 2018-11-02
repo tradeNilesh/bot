@@ -3,7 +3,7 @@
 $profileID = "22319";
 $AccountID = "32707";
  
-echo postApi("balance" , $profileID , $AccountID);
+postApi("balance" , $profileID , $AccountID);
 
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -109,8 +109,8 @@ function postApi($action,$profileID,$AccountID)
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
-	$p_result = curl_exec($ch);
-	print curl_error($ch);
+	echo $p_result = curl_exec($ch);
+
 	
 	if (FALSE === $p_result) {
 	throw new Exception(curl_error(), curl_errno());
@@ -146,7 +146,7 @@ function encrypts($plain, $key = null, $hmacSalt = null) {
 	
 	$encryptedMessage = openssl_encrypt($plain, $encryptionMethod, $key,$options=0, $iv);
 	 
-	echo $data = base64_encode($encryptedMessage);
+	$data = base64_encode($encryptedMessage);
 
 	
 

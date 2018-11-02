@@ -225,7 +225,7 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 	$iv = openssl_random_pseudo_bytes($ivlen);
 	//To Decrypt
 	echo $plain = openssl_decrypt(base64_decode($cipher), $encryptionMethod, $key,$options=0, $iv);
-
+	exit;
 	$msg_arr 	= explode('@',$plain);
 	$hmac 		= trim($msg_arr[1]);
 	$text 		= $msg_arr[0];
