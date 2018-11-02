@@ -218,16 +218,17 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 	if ($hmacSalt === null) {
 		$hmacSalt = $salt;
 	}
-	echo "----------cipher text------------";
-	echo $cipher = strtr($cipher, '-_,' , '+/=');
-	echo "----------cipher text end------------";
+	//echo "----------cipher text------------";
+	echo $cipher;
+	//echo $cipher = strtr($cipher, '-_,' , '+/=');
+	//echo "----------cipher text end------------";
 
 	$encryptionMethod = "AES-256-CBC"; 
 	$ivlen = openssl_cipher_iv_length($encryptionMethod);
 	$iv = openssl_random_pseudo_bytes($ivlen);
 	//To Decrypt
 	echo "===============Plan text============";
-	echo $plain = openssl_decrypt(base64_decode($cipher), $encryptionMethod, $key,$options=0, $iv);
+	echo $plain = openssl_decrypt($cipher, $encryptionMethod, $key,$options=0, $iv);
 	echo "===============Plan text end============";
 	$msg_arr 	= explode('@',$plain);
 	$hmac 		= trim($msg_arr[1]);
