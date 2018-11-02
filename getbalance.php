@@ -235,6 +235,10 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 		echo $original_plaintext."\n";
 	}
 
+	echo "******plan*****";
+	echo $original_plaintext;
+	echo "******plan end*****";
+
 	return $original_plaintext;
 	
 }
