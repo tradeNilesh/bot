@@ -6,8 +6,8 @@
 // $AccountID= $_REQUEST['AccountID'];
 // $profileID= $_REQUEST['profileID'];
 // $text= $_REQUEST['text'];
-echo "balance";
-echo $data = $_REQUEST['data'];
+
+$data = $_REQUEST['data'];
 
 if(isset($data) && $data != null){
 	$planText = decrypt($data);
@@ -230,7 +230,7 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 	$apiTime 	= $msg_arr[2];
 	$time 		= time();
 
-	$compareHmac = hash_hmac('sha256', $text, $salt);
+	echo $compareHmac = hash_hmac('sha256', $text, $salt);
 
 	if (($hmac !== $compareHmac) && (($time - $apiTime) > 120)) {
 		return false;
