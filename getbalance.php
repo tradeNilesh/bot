@@ -7,7 +7,7 @@
 // $profileID= $_REQUEST['profileID'];
 // $text= $_REQUEST['text'];
 
-echo $data = $text= $_REQUEST['data']; 
+$data = $text= $_REQUEST['data']; 
 
 
 if(isset($data) && $data != null){
