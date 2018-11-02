@@ -219,31 +219,23 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 		$hmacSalt = $salt;
 	}
 	//echo "----------cipher text------------";
-	$cipher = base64_decode($cipher);
+	//$ciphertext = base64_decode($cipher);
 	echo $cipher;
 	//echo $cipher = strtr($cipher, '-_,' , '+/=');
 	//echo "----------cipher text end------------";
-
-	$encryptionMethod = "AES-256-CBC"; 
-	$ivlen = openssl_cipher_iv_length($encryptionMethod);
-	$iv = openssl_random_pseudo_bytes($ivlen);
-	//To Decrypt
-	echo "===============Plan text============";
-	echo $plain = openssl_decrypt($cipher, $encryptionMethod, $key,$options=0, $iv);
-	echo "===============Plan text end============";
-	$msg_arr 	= explode('@',$plain);
-	$hmac 		= trim($msg_arr[1]);
-	$text 		= $msg_arr[0];
-	$apiTime 	= $msg_arr[2];
-	$time 		= time();
-
-	$compareHmac = hash_hmac('sha256', $text, $salt);
-
-	if (($hmac !== $compareHmac) && (($time - $apiTime) > 120)) {
-		return false;
+	$c = base64_decode($cipher);
+	$ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+	$iv = substr($c, 0, $ivlen);
+	$hmac = substr($c, $ivlen, $sha2len=32);
+	$ciphertext_raw = substr($c, $ivlen+$sha2len);
+	$original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
+	$calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary=true);
+	if (hash_equals($hmac, $calcmac))//PHP 5.6+ timing attack safe comparison
+	{
+		echo $original_plaintext."\n";
 	}
 
-	return $text;
+	return $original_plaintext;
 	
 }
 
