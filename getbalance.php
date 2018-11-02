@@ -7,11 +7,13 @@
 // $profileID= $_REQUEST['profileID'];
 // $text= $_REQUEST['text'];
 
-$data = $text= $_REQUEST['data']; 
+echo $data = $text= $_REQUEST['data']; 
 
 
 if(isset($data) && $data != null){
-	$planText = decrypt($data);
+	echo "---------plan--------";
+	echo $planText = decrypt($data);
+	echo "---------plan end--------";
 	if(isset($planText) && $planText!=false) {
 		$paramArray     = explode('|',$planText);
 		$keyworddetails = isset($paramArray[0]) ? $paramArray[0] : "";
@@ -204,7 +206,7 @@ switch ($keyworddetails)
 
 
 function decrypt($cipher, $key = null, $hmacSalt = null) {
- 
+	echo "-----------inside decrypt------------";
 	# Private salt
 	$salt = 'ZfTfbip&Gs0Z4yz3ZfTfbip&Gs0Z4yz3';
 	# Private key
@@ -216,15 +218,17 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 	if ($hmacSalt === null) {
 		$hmacSalt = $salt;
 	}
- 
-	$cipher = strtr($cipher, '-_,' , '+/=');
+	echo "----------cipher text------------";
+	echo $cipher = strtr($cipher, '-_,' , '+/=');
+	echo "----------cipher text end------------";
 
 	$encryptionMethod = "AES-256-CBC"; 
 	$ivlen = openssl_cipher_iv_length($encryptionMethod);
 	$iv = openssl_random_pseudo_bytes($ivlen);
 	//To Decrypt
+	echo "===============Plan text============";
 	echo $plain = openssl_decrypt(base64_decode($cipher), $encryptionMethod, $key,$options=0, $iv);
-
+	echo "===============Plan text end============";
 	$msg_arr 	= explode('@',$plain);
 	$hmac 		= trim($msg_arr[1]);
 	$text 		= $msg_arr[0];
@@ -237,7 +241,7 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 		return false;
 	}
 
-	return rtrim($text, "\0");
+	return $text;
 	
 }
 
