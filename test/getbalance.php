@@ -6,8 +6,8 @@
 // $AccountID= $_REQUEST['AccountID'];
 // $profileID= $_REQUEST['profileID'];
 // $text= $_REQUEST['text'];
-echo "tets";
-echo $data = $text= $_REQUEST['data'];
+echo "balance";
+echo $data = $_REQUEST['data'];
 
 if(isset($data) && $data != null){
 	$planText = decrypt($data);
