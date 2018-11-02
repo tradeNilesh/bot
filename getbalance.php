@@ -12,16 +12,15 @@ echo $data = $text= $_REQUEST['data'];
 
 if(isset($data) && $data != null){
 
-	echo "inside";	
-	echo $planText = decrypt($data);
+	$planText = decrypt($data);
 
 	if(isset($planText) && $planText!=false) {
 		$paramArray     = explode('|',$planText);
-		echo $keyworddetails = isset($paramArray[0]) ? $paramArray[0] : "";
-		echo $printflag	   	= isset($paramArray[4]) ? $paramArray[4] : "";
-		echo $AccountID		= isset($paramArray[2]) ? $paramArray[2] : "";
-		echo $profileID		= isset($paramArray[1]) ? $paramArray[1] : "";
-		echo $text			= isset($paramArray[3]) ? $paramArray[3] : "";
+		$keyworddetails = isset($paramArray[0]) ? $paramArray[0] : "";
+		$printflag	   	= isset($paramArray[4]) ? $paramArray[4] : "";
+		$AccountID		= isset($paramArray[2]) ? $paramArray[2] : "";
+		$profileID		= isset($paramArray[1]) ? $paramArray[1] : "";
+		$text			= isset($paramArray[3]) ? $paramArray[3] : "";
 	} else {
 		echo "Authentication Fail";
 		exit();
