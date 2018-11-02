@@ -227,7 +227,7 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 	$text 		= $msg_arr[0];
 	$apiTime 	= $msg_arr[2];
 	$time 		= time();
-
+	exit;
 	$compareHmac = hash_hmac('sha256', $text, $salt);
 
 	if (($hmac !== $compareHmac) && (($time - $apiTime) > 120)) {
