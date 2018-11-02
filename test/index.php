@@ -103,14 +103,16 @@ function postApi($action,$profileID,$AccountID)
 		if (FALSE === $ch){
 		throw new Exception('failed to initialize');
 	}
+
+	echo "test";
 	curl_setopt($ch, CURLOPT_URL,$curlURL);
 	curl_setopt($ch, CURLOPT_POST, TRUE);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
+	echo "test1";
 	$p_result = curl_exec($ch);
-
+	echo "test";
 	
 	if (FALSE === $p_result) {
 	throw new Exception(curl_error(), curl_errno());
