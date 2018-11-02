@@ -12,7 +12,8 @@ echo $data = $text= $_REQUEST['data'];
 
 if(isset($data) && $data != null){
 
-	$planText = decrypt($data);
+	echo "inside";	
+	echo $planText = decrypt($data);
 
 	if(isset($planText) && $planText!=false) {
 		$paramArray     = explode('|',$planText);
