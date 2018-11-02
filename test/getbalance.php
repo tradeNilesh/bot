@@ -6,7 +6,7 @@
 // $AccountID= $_REQUEST['AccountID'];
 // $profileID= $_REQUEST['profileID'];
 // $text= $_REQUEST['text'];
-
+echo "tets";
 echo $data = $text= $_REQUEST['data']; 
 exit;
 
