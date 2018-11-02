@@ -10,7 +10,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 function postApi($action,$profileID,$AccountID)
 {
  
-	$domain = "C:/xampp/htdocs/enc/getbalance.php";
+	$domain = "https://tradebottest.herokuapp.com/test/getbalance.php";
  
 	if ($action == "balance" && isset($AccountID) && isset($profileID)) {
 		$plain = "balance|".$profileID."|" ."$AccountID";
