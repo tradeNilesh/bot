@@ -219,6 +219,7 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 		$hmacSalt = $salt;
 	}
 	//echo "----------cipher text------------";
+	$cipher = base64_decode($cipher);
 	echo $cipher;
 	//echo $cipher = strtr($cipher, '-_,' , '+/=');
 	//echo "----------cipher text end------------";
