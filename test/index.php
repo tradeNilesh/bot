@@ -15,7 +15,6 @@ function postApi($action,$profileID,$AccountID)
 	if ($action == "balance" && isset($AccountID) && isset($profileID)) {
 		$plain = "balance|".$profileID."|" ."$AccountID";
 		$request = encrypts($plain);
-		$request = strtr($request, '+/=', '-_,' );
 		$curlURL = $domain."?data=".$request;
 	}	
 	 

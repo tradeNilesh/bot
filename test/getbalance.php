@@ -10,7 +10,7 @@
 $data = $_REQUEST['data'];
 
 if(isset($data) && $data != null){
-	$planText = decrypt($data);
+	echo $planText = decrypt($data);
 
 	if(isset($planText) && $planText!=false) {
 		$paramArray     = explode('|',$planText);
@@ -215,10 +215,8 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 	}
 	if ($hmacSalt === null) {
 		$hmacSalt = $salt;
-	}
- 
-	$cipher = strtr($cipher, '-_,' , '+/=');
-
+	} 
+	$cipher = base64_decode($cipher);
 	$encryptionMethod = "AES-256-CBC"; 
 	$ivlen = openssl_cipher_iv_length($encryptionMethod);
 	$iv = openssl_random_pseudo_bytes($ivlen);
@@ -230,7 +228,7 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 	$apiTime 	= $msg_arr[2];
 	$time 		= time();
 
-	echo $compareHmac = hash_hmac('sha256', $text, $salt);
+	$compareHmac = hash_hmac('sha256', $text, $salt);
 
 	if (($hmac !== $compareHmac) && (($time - $apiTime) > 120)) {
 		return false;
