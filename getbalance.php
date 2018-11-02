@@ -11,22 +11,21 @@ echo $data = $text= $_REQUEST['data'];
 
 
 if(isset($data) && $data != null){
-	echo "---------plan--------";
-	echo $planText = decrypt($data);
-	echo "---------plan end--------";
+
+	$planText = decrypt($data);
+
 	if(isset($planText) && $planText!=false) {
 		$paramArray     = explode('|',$planText);
-		$keyworddetails = isset($paramArray[0]) ? $paramArray[0] : "";
-		$printflag	   	= isset($paramArray[4]) ? $paramArray[4] : "";
-		$AccountID		= isset($paramArray[2]) ? $paramArray[2] : "";
-		$profileID		= isset($paramArray[1]) ? $paramArray[1] : "";
-		$text			= isset($paramArray[3]) ? $paramArray[3] : "";
+		echo $keyworddetails = isset($paramArray[0]) ? $paramArray[0] : "";
+		echo $printflag	   	= isset($paramArray[4]) ? $paramArray[4] : "";
+		echo $AccountID		= isset($paramArray[2]) ? $paramArray[2] : "";
+		echo $profileID		= isset($paramArray[1]) ? $paramArray[1] : "";
+		echo $text			= isset($paramArray[3]) ? $paramArray[3] : "";
 	} else {
 		echo "Authentication Fail";
 		exit();
 	}
 }
-
 
 ////-----------------------Mysql escape string------------------------------------------/////
 $keyworddetails = isset($keyworddetails) ? mysql_real_escape_string($keyworddetails) : $keyworddetails;
@@ -206,7 +205,6 @@ switch ($keyworddetails)
 
 
 function decrypt($cipher, $key = null, $hmacSalt = null) {
-	echo "-----------inside decrypt------------";
 	# Private salt
 	$salt = 'ZfTfbip&Gs0Z4yz3ZfTfbip&Gs0Z4yz3';
 	# Private key
@@ -218,10 +216,9 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 	if ($hmacSalt === null) {
 		$hmacSalt = $salt;
 	}
-	//echo "----------cipher text------------";
-	//$ciphertext = base64_decode($cipher);
-	echo $cipher = strtr($cipher, '-_,' , '+/=');
-	//echo "----------cipher text end------------";
+
+	$cipher = strtr($cipher, '-_,' , '+/=');
+	
 	$c = base64_decode($cipher);
 	$ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
 	$iv = substr($c, 0, $ivlen);
@@ -229,20 +226,16 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 	$ciphertext_raw = substr($c, $ivlen+$sha2len);
 	$original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options=OPENSSL_RAW_DATA, $iv);
 	$calcmac = hash_hmac('sha256', $ciphertext_raw, $salt, $as_binary=true);
-	if (hash_equals($hmac, $calcmac))//PHP 5.6+ timing attack safe comparison
+
+	$msg = explode("|",$original_plaintext);
+	$apiTime = $msg[count($msg)-1];
+	$time = time();
+	if (hash_equals($hmac, $calcmac) && ($apiTime - $time <15))
 	{
-		echo $original_plaintext."\n";
+		return $original_plaintext;
+	} else {
+		return false;
 	}
-
-	echo "******plan*****";
-	echo $original_plaintext;
-	echo "******plan end*****";
-	echo "====time===";
-	echo time();
-	echo "====time end===";
-
-
-	return $original_plaintext;
 	
 }
 
