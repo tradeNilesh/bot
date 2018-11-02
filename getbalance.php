@@ -7,18 +7,18 @@
 // $profileID= $_REQUEST['profileID'];
 // $text= $_REQUEST['text'];
 
-$data = $_REQUEST['data'];
+$data = $text= $_REQUEST['data']; 
+
 
 if(isset($data) && $data != null){
-	echo $planText = decrypt($data);
-
+	$planText = decrypt($data);
 	if(isset($planText) && $planText!=false) {
 		$paramArray     = explode('|',$planText);
-		echo $keyworddetails = isset($paramArray[0]) ? $paramArray[0] : "";
-		echo $printflag	   	= isset($paramArray[4]) ? $paramArray[4] : "";
-		echo $AccountID		= isset($paramArray[2]) ? $paramArray[2] : "";
-		echo $profileID		= isset($paramArray[1]) ? $paramArray[1] : "";
-		echo $text			= isset($paramArray[3]) ? $paramArray[3] : "";
+		$keyworddetails = isset($paramArray[0]) ? $paramArray[0] : "";
+		$printflag	   	= isset($paramArray[4]) ? $paramArray[4] : "";
+		$AccountID		= isset($paramArray[2]) ? $paramArray[2] : "";
+		$profileID		= isset($paramArray[1]) ? $paramArray[1] : "";
+		$text			= isset($paramArray[3]) ? $paramArray[3] : "";
 	} else {
 		echo "Authentication Fail";
 		exit();
@@ -215,19 +215,22 @@ function decrypt($cipher, $key = null, $hmacSalt = null) {
 	}
 	if ($hmacSalt === null) {
 		$hmacSalt = $salt;
-	} 
-	$cipher = base64_decode($cipher);
+	}
+ 
+	$cipher = strtr($cipher, '-_,' , '+/=');
+
 	$encryptionMethod = "AES-256-CBC"; 
 	$ivlen = openssl_cipher_iv_length($encryptionMethod);
 	$iv = openssl_random_pseudo_bytes($ivlen);
 	//To Decrypt
 	echo $plain = openssl_decrypt(base64_decode($cipher), $encryptionMethod, $key,$options=0, $iv);
+
 	$msg_arr 	= explode('@',$plain);
 	$hmac 		= trim($msg_arr[1]);
 	$text 		= $msg_arr[0];
 	$apiTime 	= $msg_arr[2];
 	$time 		= time();
-	exit;
+
 	$compareHmac = hash_hmac('sha256', $text, $salt);
 
 	if (($hmac !== $compareHmac) && (($time - $apiTime) > 120)) {
