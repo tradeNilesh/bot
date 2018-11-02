@@ -7,8 +7,8 @@
 // $profileID= $_REQUEST['profileID'];
 // $text= $_REQUEST['text'];
 
-$data = $text= $_REQUEST['data']; 
-
+echo $data = $text= $_REQUEST['data']; 
+exit;
 
 if(isset($data) && $data != null){
 	$planText = decrypt($data);
